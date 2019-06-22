@@ -1,0 +1,5 @@
+<ul *ngIf="res$ | async as res">
+  <li *ngFor="let r of res.results">
+    <pre>{{ r | json }}</pre>
+  </li>
+</ul>
