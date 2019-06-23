@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { DataService } from 'src/app/service/data.service';
 
 @Component({
@@ -15,7 +16,9 @@ export class FilmComponent implements OnInit {
 
   ngOnInit() {
     console.log('... init');
-    this.res$ = this.dsvc.getFilms();
+    this.res$ = this.dsvc.getFilms().pipe(
+      tap((res: any) => res.results.sort((a, b) => a.episode_id - b.episode_id))
+    );
   }
 
 }

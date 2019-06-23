@@ -10,6 +10,7 @@ import { DataService } from 'src/app/service/data.service';
 export class HeroComponent implements OnInit {
 
   res$: Observable<any>;
+  keyword: string;
 
   constructor(private dsvc: DataService) { }
 
@@ -18,4 +19,7 @@ export class HeroComponent implements OnInit {
     this.res$ = this.dsvc.getPeople();
   }
 
+  search(evt){
+    this.res$ = this.dsvc.getPeople(this.keyword);
+  }
 }

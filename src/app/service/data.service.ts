@@ -11,8 +11,12 @@ export class DataService {
   public getFilms() {
     return this.http.get(`https://swapi.co/api/films/`);
   }
-  public getPeople() {
-    return this.http.get(`https://swapi.co/api/people/`);
+  public getPeople(search?: string) {
+    if (search && search.trim()) {
+      return this.http.get(`https://swapi.co/api/people/?search=${search}`);
+    } else {
+      return this.http.get(`https://swapi.co/api/people/`);
+    }
   }
   public getPlanets() {
     return this.http.get(`https://swapi.co/api/planets/`);

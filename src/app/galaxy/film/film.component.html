@@ -2,8 +2,8 @@
   <mat-card class="a-card" *ngFor="let r of res.results">
     <mat-card-header>
       <!-- <div mat-card-avatar class="example-header-image"></div> -->
-      <mat-card-title>{{ r.title }}</mat-card-title>
-      <mat-card-subtitle>Episode: {{ r.episode_id }}</mat-card-subtitle>
+      <mat-card-title><span matBadge="{{ r.episode_id }}" matBadgeOverlap="false">{{ r.title }}</span></mat-card-title>
+      <mat-card-subtitle>{{ r.release_date }}, {{ r.producer }}, {{ r.director }}</mat-card-subtitle>
     </mat-card-header>
     <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
     <mat-card-content>
@@ -11,17 +11,16 @@
         {{ r.opening_crawl }}
       </p>
     </mat-card-content>
-    <mat-card-actions>
+    <!-- <mat-card-actions>
       <button mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
-    </mat-card-actions>
+    </mat-card-actions> -->
   </mat-card>
 </ng-container>
 
-
-<ul *ngIf="res$ | async as res">
+<!-- <ul *ngIf="res$ | async as res">
   <li *ngFor="let r of res.results">
     <pre>{{ r | json }}</pre>
   </li>
-</ul>
+</ul> -->

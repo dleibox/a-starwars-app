@@ -45,7 +45,7 @@ export class AppComponent {
         items: [
           {
             url: '',
-            title: 'Developed by Daniel',
+            title: 'Developed by Daniel 2019',
             content: '',
           },
           // {
