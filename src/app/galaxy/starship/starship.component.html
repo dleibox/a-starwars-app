@@ -1,5 +1,19 @@
-<ul *ngIf="res$ | async as res">
-  <li *ngFor="let r of res.results">
-    <pre>{{ r | json }}</pre>
-  </li>
-</ul>
+<ng-container *ngIf="res$ | async as res">
+  <mat-card class="a-card" *ngFor="let r of res.results">
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title>{{ r.name }}</mat-card-title>
+      <mat-card-subtitle>{{ r.model }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{ r | json }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>

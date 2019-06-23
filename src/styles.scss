@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.a-form {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+mat-card.a-card {
+    margin: 12px;
+}

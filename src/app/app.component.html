@@ -1,29 +1,48 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to <a [routerLink]="'/'">{{ title }}</a>!
-  </h1>
-</div>
-<h2 style="text-align: center">Here are some links to help you start: </h2>
-<ul style="text-align: center">
-  <li>
-    <h2><a [routerLink]="'/film'" rel="noopener">Films</a></h2>
-  </li>
-  <li>
-    <h2><a [routerLink]="'/hero'" rel="noopener">People</a></h2>
-  </li>
-  <li>
-    <h2><a [routerLink]="'/planet'" rel="noopener">Planets</a></h2>
-  </li>
-  <li>
-    <h2><a [routerLink]="'/starship'" rel="noopener">Starships</a></h2>
-  </li>
-  <li>
-    <h2><a [routerLink]="'/specie'" rel="noopener">Species</a></h2>
-  </li>
-  <li>
-    <h2><a [routerLink]="'/vehicle'" rel="noopener">Vehicles</a></h2>
-  </li>
-</ul>
+<div class="a-container" [class.a-is-mobile]="mobileQuery.matches">
+  <router-outlet></router-outlet>
 
-<router-outlet></router-outlet>
+  <mat-toolbar color="primary" class="a-toolbar">
+    <button mat-icon-button (click)="leftSide.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a mat-button routerLink="/">
+      <h1 class="a-app-name">{{title}}</h1>
+    </a>
+    <button mat-icon-button (click)="openSheet()">
+      <mat-icon>info</mat-icon>
+    </button>
+    <span class="a-spacer"></span>
+    <button mat-icon-button (click)="rightSide.toggle()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="a-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #leftSide [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
+      <mat-nav-list>
+        <a mat-list-item routerLink="film">Films</a>
+        <a mat-list-item routerLink="hero">People</a>
+        <a mat-list-item routerLink="planet">Planets</a>
+        <a mat-list-item routerLink="starship">Starships</a>
+        <a mat-list-item routerLink="specie">Species</a>
+        <a mat-list-item routerLink="vehicle">Vehicles</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav #rightSide position="end" [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <div class="a-form">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
