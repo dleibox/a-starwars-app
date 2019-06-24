@@ -10,6 +10,12 @@
 mat-card {
     &.a-card {
         margin: 12px;
+
+        .a-card-header {
+            .mat-card-header-text {
+                width: 100%;
+            }
+        }
     }
 }
 
