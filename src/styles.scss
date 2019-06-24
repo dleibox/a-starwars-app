@@ -7,6 +7,14 @@
     padding: 1.5rem;
 }
 
-mat-card.a-card {
-    margin: 12px;
+mat-card {
+    &.a-card {
+        margin: 12px;
+    }
+}
+
+mat-form-field {
+    &.a-search {
+        width: 100%;
+    }
 }

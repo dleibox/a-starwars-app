@@ -1,6 +1,6 @@
 <mat-card class="a-card">
   <mat-card-content>
-    <mat-form-field>
+    <mat-form-field class="a-search">
       <input matInput type="text" placeholder="Search..." maxlength="50" [(ngModel)]="keyword" (input)="search($event)">
     </mat-form-field>
   </mat-card-content>
@@ -13,22 +13,24 @@
       <mat-card-title>{{ r.name }}</mat-card-title>
       <mat-card-subtitle>
         <mat-chip-list>
-          <mat-chip>BOD: {{ r.birth_year }}</mat-chip>
+          <mat-chip>{{ r.birth_year }}</mat-chip>
           <mat-chip [color]="r.gender === 'male' ? 'primary' : (r.gender === 'female' ? 'accent' : '')" selected>
             {{ r.gender }}</mat-chip>
           <mat-chip>{{ r.height }}</mat-chip>
           <mat-chip>{{ r.mass }}</mat-chip>
-          <mat-chip>{{ r.hair_color }}</mat-chip>
-          <mat-chip>{{ r.skin_color }}</mat-chip>
-          <mat-chip>{{ r.eye_color }}</mat-chip>
         </mat-chip-list>
       </mat-card-subtitle>
     </mat-card-header>
-    <!-- <mat-card-content>
-      <p>
-        {{ r | json }}
-      </p>
-    </mat-card-content> -->
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let kv of r | keyvalue">
+          {{ kv.key }}: <ng-template #desc><b>{{ kv.value }}</b></ng-template>
+          <ul *ngIf="kv.value.constructor.name === 'Array'; else desc">
+            <li *ngFor="let v of kv.value">{{ v }}</li>
+          </ul>
+        </li>
+      </ul>
+    </mat-card-content>
     <!-- <mat-card-actions>
       <button mat-icon-button>
         <mat-icon>delete</mat-icon>
