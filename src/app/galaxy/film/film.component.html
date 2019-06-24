@@ -1,5 +1,5 @@
 <ng-container *ngIf="res$ | async as res">
-  <mat-card class="a-card" *ngFor="let r of res.results">
+  <mat-card class="a-card" *ngFor="let r of res">
     <mat-card-header>
       <!-- <div mat-card-avatar class="example-header-image"></div> -->
       <mat-card-title><span matBadge="{{ r.episode_id }}" matBadgeOverlap="false">{{ r.title }}</span></mat-card-title>
