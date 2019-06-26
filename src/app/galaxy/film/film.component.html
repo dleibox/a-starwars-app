@@ -1,6 +1,6 @@
 <ng-container *ngIf="res$ | async as res">
-  <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0" fxLayoutAlign="center">
-    <mat-card class="a-card" *ngFor="let r of res">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0" fxLayoutAlign="center">
+    <mat-card class="a-card a-card-tile" *ngFor="let r of res">
       <mat-card-header>
         <!-- <div mat-card-avatar class="example-header-image"></div> -->
         <mat-card-title><span matBadge="{{ r.episode_id }}" matBadgeOverlap="false">{{ r.title }}</span>
