@@ -1,13 +1,13 @@
 <mat-card class="a-card">
   <mat-card-content>
     <mat-form-field class="a-search">
-      <input matInput type="text" placeholder="Search..." maxlength="50" [(ngModel)]="keyword" (input)="search($event)">
+      <input matInput type="text" placeholder="Search..." maxlength="50" [formControl]="search">
     </mat-form-field>
   </mat-card-content>
 </mat-card>
 
 <ng-container *ngIf="res$ | async as res">
-  <mat-card class="a-card" *ngFor="let r of res.results">
+  <mat-card class="a-card" *ngFor="let r of res">
     <mat-card-header>
       <!-- <div mat-card-avatar class="example-header-image"></div> -->
       <mat-card-title>{{ r.name }}</mat-card-title>

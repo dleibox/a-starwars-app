@@ -10,6 +10,7 @@
 mat-card {
     &.a-card {
         margin: 12px;
+        max-width: 400px;
 
         .a-card-header {
             .mat-card-header-text {

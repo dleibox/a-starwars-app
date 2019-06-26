@@ -23,8 +23,6 @@ import { AppBottomsheetComponent } from './app-bottomsheet.component';
   imports: [
     BrowserModule, HttpClientModule,
     BrowserAnimationsModule,
-    AppMaterialModule,
-    AppRoutingModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -32,6 +30,8 @@ import { AppBottomsheetComponent } from './app-bottomsheet.component';
     }),
     EffectsModule.forRoot([]),
     ServiceModule.forRoot(),
+    AppMaterialModule,
+    AppRoutingModule,
   ],
   entryComponents: [
     AppBottomsheetComponent

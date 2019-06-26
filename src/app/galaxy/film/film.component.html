@@ -1,22 +1,25 @@
 <ng-container *ngIf="res$ | async as res">
-  <mat-card class="a-card" *ngFor="let r of res">
-    <mat-card-header>
-      <!-- <div mat-card-avatar class="example-header-image"></div> -->
-      <mat-card-title><span matBadge="{{ r.episode_id }}" matBadgeOverlap="false">{{ r.title }}</span></mat-card-title>
-      <mat-card-subtitle>{{ r.release_date }}, {{ r.producer }}, {{ r.director }}</mat-card-subtitle>
-    </mat-card-header>
-    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-    <mat-card-content>
-      <p>
-        {{ r.opening_crawl }}
-      </p>
-    </mat-card-content>
-    <!-- <mat-card-actions>
+  <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0" fxLayoutAlign="center">
+    <mat-card class="a-card" *ngFor="let r of res">
+      <mat-card-header>
+        <!-- <div mat-card-avatar class="example-header-image"></div> -->
+        <mat-card-title><span matBadge="{{ r.episode_id }}" matBadgeOverlap="false">{{ r.title }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>{{ r.release_date }}, {{ r.producer }}, {{ r.director }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [attr.src]="r.cover" alt="">
+      <mat-card-content>
+        <p>
+          {{ r.opening_crawl }}
+        </p>
+      </mat-card-content>
+      <!-- <mat-card-actions>
       <button mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
     </mat-card-actions> -->
-  </mat-card>
+    </mat-card>
+  </div>
 </ng-container>
 
 <!-- <ul *ngIf="res$ | async as res">

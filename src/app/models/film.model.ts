@@ -1,5 +1,6 @@
 export interface Film {
   id?: number,
+  cover?: string,
   title: string,
   episode_id: number,
   opening_crawl: string,
