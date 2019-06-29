@@ -7,7 +7,8 @@ export function heroReducer(state: HeroState = initialState, action: actions.Her
 
     case actions.LOAD:
       console.log('[heroReducer] LOAD');
-      return state;
+      // return state;
+      return heroAdapter.addAll([], state);
 
     case actions.LOAD_SUCCESS:
       console.log('[heroReducer] LOAD_SUCCESS');

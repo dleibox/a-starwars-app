@@ -7,7 +7,8 @@ export function filmReducer(state: FilmState = initialState, action: actions.Fil
 
     case actions.LOAD:
       console.log('[filmReducer] LOAD');
-      return state;
+      // return state;
+      return filmAdapter.addAll([], state);
 
     case actions.LOAD_SUCCESS:
       console.log('[filmReducer] LOAD_SUCCESS');
