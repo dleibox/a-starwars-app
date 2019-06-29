@@ -1,0 +1,57 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.16.0
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: # test what branch we're on.
+          name: "What branch am I on?"
+          command: |
+            echo ${CIRCLE_BRANCH}
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      # - run: yarn test
+
+      # run deploy!
+      - add_ssh_keys
+
+      - deploy:
+          name: Deploy Over SSH
+          command: |
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/a-starwars-app/* root@sw.dlei.ca:/var/www/html/sw.dlei.ca
+      - run:
+          name: Restart nginx
+          command: |
+            # copy nginx conf to prod server
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./.circleci/nginx.conf root@sw.dlei.ca:/etc/nginx/sites-available/sw.dlei.ca
+            # update and restart nginx on prod server
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root 'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; sudo service nginx restart'

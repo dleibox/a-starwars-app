@@ -4,6 +4,15 @@ This is a demo application for Star Wars stories. It’s using Angular 8, Angula
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
+## What's included:
+
+- Angular 8+ & Typescript
+- Angular Material & SCSS
+- Responsive layout
+- NgRx (Store, State, Action, Reducer, Effect, Entity Adapter)
+- CI/CD (CircleCI pipeline, Docker build, Test, SSH Deployment)
+- Nginx
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:878/`. The app will automatically reload if you change any of the source files.
