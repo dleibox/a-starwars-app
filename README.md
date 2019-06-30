@@ -12,6 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - NgRx (Store, State, Action, Reducer, Effect, Entity Adapter)
 - CI/CD (CircleCI pipeline, Docker build, Test, SSH Deployment)
 - Nginx
+- Vultr VPS
 
 ## Development server
 

@@ -47,11 +47,18 @@ jobs:
       - deploy:
           name: Deploy Over SSH
           command: |
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/a-starwars-app/* root@sw.dlei.ca:/var/www/html/sw.dlei.ca
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root \
+              'sudo mkdir /var/www/html/sw.dlei.ca'
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+              -r ./dist/a-starwars-app/* root@sw.dlei.ca:/var/www/html/sw.dlei.ca
       - run:
           name: Restart nginx
           command: |
             # copy nginx conf to prod server
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./.circleci/nginx.conf root@sw.dlei.ca:/etc/nginx/sites-available/sw.dlei.ca
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+              -r ./.circleci/nginx.conf root@sw.dlei.ca:/etc/nginx/sites-available/sw.dlei.ca
             # update and restart nginx on prod server
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root 'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; sudo service nginx restart'
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root \
+              'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; \
+              sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; \
+              sudo service nginx restart'
