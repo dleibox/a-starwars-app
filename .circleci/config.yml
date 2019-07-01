@@ -48,7 +48,7 @@ jobs:
           name: Deploy Over SSH
           command: |
             ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root \
-              'sudo mkdir /var/www/html/sw.dlei.ca'
+              'sudo mkdir -p /var/www/html/sw.dlei.ca'
             scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
               -r ./dist/a-starwars-app/* root@sw.dlei.ca:/var/www/html/sw.dlei.ca
       - run:
