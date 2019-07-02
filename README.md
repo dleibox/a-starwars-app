@@ -10,7 +10,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Angular Material & SCSS
 - Responsive layout
 - NgRx (Store, State, Action, Reducer, Effect, Entity Adapter)
-- CI/CD (CircleCI pipeline, Docker build, Test, SSH Deployment)
+- CI/CD (GitHub/bitbucket, CircleCI pipeline, Docker build, Test, SSH Deployment)
 - Nginx
 - Vultr Ubuntu VPS, Heroku cloud containers
 
