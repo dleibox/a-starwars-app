@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoaderService } from './loader.service';
+import { environment } from 'src/environments/environment';
 
 let loader: LoaderService;
 const setLoaderService = (ldr: LoaderService) => {
@@ -37,35 +38,35 @@ export class DataService {
 
   @ShowLoader()
   public getFilms() {
-    return this.http.get(`https://swapi.co/api/films/`);
+    return this.http.get(`${environment.starwarsApi}films/`);
   }
 
   @ShowLoader()
   public getPeople(search?: string) {
     if (search && search.trim()) {
-      return this.http.get(`https://swapi.co/api/people/?search=${search}`);
+      return this.http.get(`${environment.starwarsApi}people/?search=${search}`);
     } else {
-      return this.http.get(`https://swapi.co/api/people/`);
+      return this.http.get(`${environment.starwarsApi}people/`);
     }
   }
 
   @ShowLoader()
   public getPlanets() {
-    return this.http.get(`https://swapi.co/api/planets/`);
+    return this.http.get(`${environment.starwarsApi}planets/`);
   }
 
   @ShowLoader()
   public getStarships() {
-    return this.http.get(`https://swapi.co/api/starships/`);
+    return this.http.get(`${environment.starwarsApi}starships/`);
   }
 
   @ShowLoader()
   public getSpecies() {
-    return this.http.get(`https://swapi.co/api/species/`);
+    return this.http.get(`${environment.starwarsApi}species/`);
   }
 
   @ShowLoader()
   public getVehicles() {
-    return this.http.get(`https://swapi.co/api/vehicles/`);
+    return this.http.get(`${environment.starwarsApi}vehicles/`);
   }
 }

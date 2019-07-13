@@ -20,7 +20,8 @@ export function heroReducer(state: HeroState = initialState, action: actions.Her
 
     case actions.FIND:
       console.log('[heroReducer] FIND');
-      return state;
+      // return state;
+      return heroAdapter.addAll([], state);
 
     case actions.FIND_SUCCESS:
       console.log('[heroReducer] FIND_SUCCESS');

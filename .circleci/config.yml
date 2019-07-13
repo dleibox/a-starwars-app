@@ -47,18 +47,70 @@ jobs:
       - deploy:
           name: Deploy Over SSH
           command: |
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root \
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
               'sudo mkdir -p /var/www/html/sw.dlei.ca'
             scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-              -r ./dist/a-starwars-app/* root@sw.dlei.ca:/var/www/html/sw.dlei.ca
+              -r ./dist/a-starwars-app/* root@${REMOTE_SERVER}:/var/www/html/sw.dlei.ca
       - run:
           name: Restart nginx
           command: |
             # copy nginx conf to prod server
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-              -r ./.circleci/nginx.conf root@sw.dlei.ca:/etc/nginx/sites-available/sw.dlei.ca
+            # scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            #   -r ./.circleci/nginx.conf root@${REMOTE_SERVER}:/etc/nginx/sites-available/sw.dlei.ca
+            # prepare nginx conf on prod server
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
+              "echo 'server {
+                listen 80;
+                listen [::]:80;
+
+                server_name starwars.dlei.ca sw.dlei.ca ${REMOTE_SERVER};
+
+                root /var/www/html/sw.dlei.ca;
+
+                index index.html;
+
+                location / {
+                  # try_files \$uri \$uri/ =404;
+                  try_files \$uri \$uri/ /index.html;
+                }
+            }' > /etc/nginx/sites-available/sw.dlei.ca"
             # update and restart nginx on prod server
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null sw.dlei.ca -l root \
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
               'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; \
               sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; \
               sudo service nginx restart'
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      # - checkout
+      - run:
+          name: "TODO test job"
+          command: |
+            echo ${CIRCLE_BRANCH}
+
+  heroku:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+
+  deploy-heroku:
+    jobs:
+      - test
+      - heroku:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
