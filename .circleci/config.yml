@@ -48,9 +48,9 @@ jobs:
           name: Deploy Over SSH
           command: |
             ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
-              'sudo mkdir -p /var/www/html/sw.dlei.ca'
+              'sudo mkdir -p ~/_daniel/docker-data/a-nginx-data/www/sw.dlei.ca'
             scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-              -r ./dist/a-starwars-app/* root@${REMOTE_SERVER}:/var/www/html/sw.dlei.ca
+              -r ./dist/a-starwars-app/* root@${REMOTE_SERVER}:~/_daniel/docker-data/a-nginx-data/www/sw.dlei.ca
       - run:
           name: Restart nginx
           command: |
@@ -65,7 +65,7 @@ jobs:
 
                 server_name starwars.dlei.ca sw.dlei.ca ${REMOTE_SERVER};
 
-                root /var/www/html/sw.dlei.ca;
+                root /usr/share/nginx/html/sw.dlei.ca; # => .../a-nginx-data/www/sw.dlei.ca
 
                 index index.html;
 
@@ -73,12 +73,14 @@ jobs:
                   # try_files \$uri \$uri/ =404;
                   try_files \$uri \$uri/ /index.html;
                 }
-            }' > /etc/nginx/sites-available/sw.dlei.ca"
+            }' > ~/_daniel/docker-data/a-nginx-data/a-nginx-conf/sw.dlei.ca.conf"
             # update and restart nginx on prod server
+            # ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
+            #   'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; \
+            #   sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; \
+            #   sudo service nginx restart'
             ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
-              'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; \
-              sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; \
-              sudo service nginx restart'
+              'sudo service nginx restart'
   test:
     docker:
       - image: circleci/node:latest
