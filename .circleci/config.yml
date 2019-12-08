@@ -60,6 +60,8 @@ jobs:
             # prepare nginx conf on prod server
             ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
               "echo 'server {
+                # generated from source by cicd
+
                 listen 80;
                 listen [::]:80;
 
@@ -79,8 +81,10 @@ jobs:
             #   'sudo rm /etc/nginx/sites-enabled/sw.dlei.ca; \
             #   sudo ln -s /etc/nginx/sites-available/sw.dlei.ca /etc/nginx/sites-enabled/; \
             #   sudo service nginx restart'
+            # ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
+            #   'sudo service nginx restart' // got error???
             ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
-              'sudo service nginx restart'
+              'docker restart a-cicd-nginx-c'
   test:
     docker:
       - image: circleci/node:latest
