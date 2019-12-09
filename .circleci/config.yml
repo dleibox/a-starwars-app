@@ -84,7 +84,7 @@ jobs:
             # ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
             #   'sudo service nginx restart' // got error???
             ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_SERVER} -l root \
-              'docker restart a-cicd-nginx-c'
+              '/snap/bin/docker restart a-cicd-nginx-c'
   test:
     docker:
       - image: circleci/node:latest
